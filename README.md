@@ -2,24 +2,31 @@
 
 An AI-powered customer support agent built using historical AmazonHelp customer-service conversations.
 
-The system combines intent classification, historical response retrieval, grounded response generation, and escalation logic to assist with customer-support queries.
+The system combines:
+
+- Intent classification
+- Historical conversation retrieval
+- Response generation using historical support evidence
+- Automatic escalation decisions
+- Evaluation of classification and retrieval performance
 
 ## Project Overview
 
-The objective of this project is to build a support agent that can:
+The goal of this project is to build an AI support agent that can process customer-service queries and determine how they should be handled.
 
-- Understand customer support messages
-- Classify customer intent
-- Retrieve similar historical conversations
-- Use historical AmazonHelp responses as evidence
-- Generate a grounded support response
-- Decide whether a case can be handled automatically or should be escalated
+Given a customer message, the system:
+
+1. Classifies the customer's intent.
+2. Retrieves similar historical conversations.
+3. Uses historical AmazonHelp responses as supporting evidence.
+4. Generates a support response.
+5. Determines whether the request can be handled automatically or should be escalated.
 
 ## Dataset
 
 The primary dataset contains:
 
-- 136,221 historical conversations
+- **136,221 historical conversations**
 - Customer messages
 - AmazonHelp responses
 - Tweet/conversation identifiers
@@ -29,17 +36,19 @@ The project also uses the Twitter Customer Support (TWCS) dataset for exploratio
 
 ## Intent Taxonomy
 
-The system uses the following support intents:
+The system supports nine customer-support intents:
 
-1. `delivery_issue`
-2. `order_issue`
-3. `refund_billing`
-4. `return_issue`
-5. `account_issue`
-6. `payment_issue`
-7. `device_technical`
-8. `prime_membership`
-9. `general_complaint`
+| Intent | Description |
+|---|---|
+| `delivery_issue` | Delivery delays, missing or incorrect deliveries |
+| `order_issue` | Problems related to orders and order status |
+| `refund_billing` | Refund requests and billing-related concerns |
+| `return_issue` | Product returns and return processing |
+| `account_issue` | Login, account access, or account-related problems |
+| `payment_issue` | Payment and transaction problems |
+| `device_technical` | Technical issues with Amazon devices |
+| `prime_membership` | Amazon Prime membership-related issues |
+| `general_complaint` | General complaints and unsupported issues |
 
 Detailed definitions are available in:
 
@@ -48,41 +57,38 @@ Detailed definitions are available in:
 ## System Architecture
 
 ```text
-                    Customer Message
-                           |
-                           v
-                  +------------------+
-                  | Intent Classifier|
-                  +--------+---------+
-                           |
-                           v
-                     Intent Label
-                           |
-                           v
-                  +------------------+
-                  | Historical       |
-                  | Retrieval        |
-                  | 136K+ Messages   |
-                  +--------+---------+
-                           |
-                           v
-                  Similar Conversations
-                           |
-                           v
-                  Historical Responses
-                           |
-                           v
-                  +------------------+
-                  | Response Layer   |
-                  +--------+---------+
-                           |
-                           v
-                  +------------------+
-                  | Decision Layer   |
-                  +--------+---------+
-                           |
-                  +--------+--------+
-                  |                 |
-                AUTO            ESCALATE
-
-##Project structure
+                         Customer Message
+                                |
+                                v
+                     +----------------------+
+                     |   Intent Classifier  |
+                     +----------+-----------+
+                                |
+                                v
+                         Predicted Intent
+                                |
+                                v
+                     +----------------------+
+                     | Historical Retrieval |
+                     |    136K+ Records     |
+                     +----------+-----------+
+                                |
+                                v
+                    Similar Conversations
+                                |
+                                v
+                    Historical Responses
+                                |
+                                v
+                     +----------------------+
+                     |   Response Layer     |
+                     +----------+-----------+
+                                |
+                                v
+                     +----------------------+
+                     |   Decision Layer     |
+                     +----------+-----------+
+                                |
+                    +-----------+-----------+
+                    |                       |
+                  AUTO                   ESCALATE
